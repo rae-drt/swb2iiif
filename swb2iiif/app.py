@@ -8,9 +8,12 @@ def read_csv(file_name):
 
 manifest = Manifest(id="https://example.com/iiif/manifest.json", label={"en":["Example Manifest"]}, behavior="paged")
 
+manifest.make_service(id="http://localhost:5555/search", type="SearchService2")
+
 for row in pd.read_csv("../export/solrwayback_2023-10-18_15-30-22.csv", chunksize=1):
     url = row['url'].values[0]
     id = row['id'].values[0]
+    if row['description'].isnull().values.any(): continue
     description = row['description'].values[0]
     resource_item = ResourceItem(id=url, type="Image", height="3024", width="4032")
     annotation_page = AnnotationPage(id=f"https://example.com/iiif/annopage-1/{id}")
@@ -21,7 +24,6 @@ for row in pd.read_csv("../export/solrwayback_2023-10-18_15-30-22.csv", chunksiz
     manifest.add_item(canvas)
 
     anno_resource_item = ResourceItem1(id=f"https://example.com/iiif/annopage-2/anno-1/{id}", type="TextualBody", value=description)
-    anno_annotation_page = AnnotationPage(id=f"https://example.com/iiif/annopage-2/{id}")
     anno_item = Annotation(id=f"https://example.com/iiif/anno-2/{id}", body=anno_resource_item, target=f"https://example.com/iiif/canvas-{id}", motivation="commenting")
     canvas.add_annotation(anno_item)
     
