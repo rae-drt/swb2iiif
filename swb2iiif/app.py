@@ -6,7 +6,7 @@ def read_csv(file_name):
         yield row
 
 
-manifest = Manifest(id="https://example.com/iiif/manifest.json", label={"en":["Example Manifest"]}, behavior="paged")
+manifest = Manifest(id="https://example.com/iiif/manifest.json", label={"en":["Example export from Solrwayback"]}, behavior="paged")
 
 manifest.make_service(id="http://localhost:5555/search", type="SearchService2")
 
