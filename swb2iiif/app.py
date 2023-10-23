@@ -12,9 +12,8 @@ manifest.make_service(id="http://localhost:5555/search", type="SearchService2")
 
 
 df = pd.read_csv('../export/solrwayback_2023-10-18_15-30-22.csv')
-
-
-for row in df.itertuples(index=True, name='Pandas'):
+dedup_df = df.drop_duplicates(subset=['description'])
+for row in dedup_df.itertuples(index=True, name='Pandas'):
     url = getattr(row, "url")
     id = getattr(row, "id")
     description = getattr(row, "description")#
