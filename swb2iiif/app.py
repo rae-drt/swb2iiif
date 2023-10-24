@@ -16,7 +16,7 @@ dedup_df = df.drop_duplicates(subset=['description'])
 for row in dedup_df.itertuples(index=True, name='Pandas'):
     url = getattr(row, "url")
     id = getattr(row, "id")
-    description = getattr(row, "description")#
+    description = getattr(row, "description")
     if pd.notnull(description):
         resource_item = ResourceItem(id=url, type="Image", height="3024", width="4032")
         annotation_page = AnnotationPage(id=f"https://example.com/iiif/annopage-1/{id}")
