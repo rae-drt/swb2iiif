@@ -1,6 +1,8 @@
 # swb2iiif
 
-Generate a IIIF manifest from a Solrwayback csv export
+## Generate a IIIF manifest from a Solrwayback csv export
+
+### usage
 
 ```
 ❯ python app.py --help
@@ -20,3 +22,23 @@ Options:
   --version               Show the version and exit.
   --help                  Show this message and exit.
   ```
+
+### installation
+```
+git clone https://github.com/rae-drt/swb2iiif.git
+cd swb2iiif
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cd swb2iiif
+```
+
+### example command
+```
+python app.py --csv ../export/solrwayback_2023-10-18_15-30-22.csv --domain iwm.org.uk --uri-prefix https://miiifystore.s3.eu-west-2.amazonaws.com/swb --label 'Export of iwm.org.uk from Solrwayback' --search-service http://pi.zedstar.org:5555/search
+```
+
+### example output
+
+https://projectmirador.org/embed/?iiif-content=https://miiifystore.s3.eu-west-2.amazonaws.com/swb/iwm.json
+
