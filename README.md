@@ -1,6 +1,11 @@
 # swb2iiif
 
-## Generate a IIIF manifest from a Solrwayback csv export
+## Generate a IIIF manifest from a Solrwayback CSV export
+
+Select the image type facet and make sure your export includes the following fields:
+```
+id,description,url,domain
+```
 
 ### usage
 
