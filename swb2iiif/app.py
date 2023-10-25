@@ -8,7 +8,7 @@ def read_csv(file_name):
 
 manifest = Manifest(id="https://example.com/iiif/manifest.json", label={"en":["Example export from Solrwayback"]}, behavior="paged")
 
-manifest.make_service(id="http://localhost:5555/search", type="SearchService2")
+manifest.make_service(id="http://pi.zedstar.org:5555/search", type="SearchService2")
 
 
 df = pd.read_csv('../export/solrwayback_2023-10-18_15-30-22.csv')
