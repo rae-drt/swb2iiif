@@ -8,7 +8,7 @@ config_ini.read("config.ini")
 
 @click.command()
 @click.option("--csv", required=True, help="csv file to parse.")
-@click.option("--domain", required=False, help="filter by domain.")
+@click.option("--domain", required=True, help="filter by domain.")
 @click.option("--search-service", required=False, show_default=True, default=config_ini.get("swb2iiif", "SEARCH_SERVICE"), help="content search service.")
 @click.option("--uri-prefix", required=False, default=config_ini.get("swb2iiif", "URI_PREFIX"), help="used to form URI id.")
 @click.option("--label", required=False, default=config_ini.get("swb2iiif", "LABEL"), help="manifest label.")
@@ -16,16 +16,16 @@ config_ini.read("config.ini")
 
 
 def run(csv, search_service, domain, uri_prefix, label):
-    manifest = Manifest(id=f"{uri_prefix}/manifest.json", label={"en":[label]}, behavior="paged")
+    manifest = Manifest(id=f"{uri_prefix}/manifest.json", label={"en":[label]})
     manifest.make_service(id=search_service, type="SearchService2")
     df = pd.read_csv(csv)
     dedup_df = df.drop_duplicates(subset=['description'])
     for row in dedup_df.itertuples(index=True, name='Pandas'):
         url = getattr(row, "url")
         id = getattr(row, "id")
-        domain = getattr(row, "domain")
+        export_domain = getattr(row, "domain")
         description = getattr(row, "description")
-        if pd.notnull(description):
+        if pd.notnull(description) and domain == export_domain:
             painting_resource_item = ResourceItem(id=url, type="Image", height="3024", width="4032")
             annotation_page = AnnotationPage(id=f"{uri_prefix}/annotation-page/{id}")
             painting_item = Annotation(id=f"{uri_prefix}/painting/{id}", body=painting_resource_item, target=f"{uri_prefix}/canvas-{id}", motivation="painting")
